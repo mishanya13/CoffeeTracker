@@ -1,0 +1,113 @@
+{
+  "app": {
+    "title": "CoffeeTracker",
+    "tagline": "נהל את מלאי הקפה והמכונה שלך"
+  },
+  "nav": {
+    "dashboard": "לוח בקרה",
+    "inventory": "מלאי קפה",
+    "usage": "יומן שימוש",
+    "machine": "מכונת קפה",
+    "recipes": "מתכונים",
+    "quickBrew": "הכנה מהירה",
+    "stats": "סטטיסטיקות"
+  },
+  "coffee": {
+    "title": "מלאי קפה",
+    "name": "שם הקפה",
+    "brand": "מותג",
+    "roastLevel": "רמת קלייה",
+    "origin": "מקור",
+    "shopName": "חנות/ספק",
+    "purchaseDate": "תאריך רכישה",
+    "initialQuantity": "כמות ראשונית (גרם)",
+    "currentQuantity": "כמות נוכחית (גרם)",
+    "price": "מחיר",
+    "notes": "הערות",
+    "addNew": "הוסף קפה חדש",
+    "edit": "ערוך קפה",
+    "delete": "מחק",
+    "noCoffees": "אין עדיין קפה במלאי",
+    "details": "פרטי קפה"
+  },
+  "roastLevels": {
+    "LIGHT": "בהיר",
+    "MEDIUM": "בינוני",
+    "DARK": "כהה"
+  },
+  "usage": {
+    "title": "יומן שימוש",
+    "recordUsage": "רשום שימוש",
+    "selectCoffee": "בחר קפה",
+    "amountUsed": "כמות בשימוש (גרם)",
+    "date": "תאריך",
+    "history": "היסטוריית שימוש",
+    "noLogs": "אין עדיין רישומי שימוש",
+    "totalUsed": "סה\"כ נוצל"
+  },
+  "machine": {
+    "title": "מכונת קפה",
+    "addMachine": "הוסף מכונה",
+    "name": "שם המכונה",
+    "brand": "מותג",
+    "model": "דגם",
+    "noMachines": "אין עדיין מכונת קפה מוגדרת",
+    "details": "פרטי מכונה"
+  },
+  "recipe": {
+    "title": "מתכונים",
+    "addRecipe": "הוסף מתכון",
+    "name": "שם המתכון",
+    "volume": "נפח (מ\"ל)",
+    "description": "תיאור",
+    "isActive": "פעיל",
+    "counter": "פעמים שהוכן",
+    "noRecipes": "אין עדיין מתכונים מוגדרים",
+    "espresso": "אספרסו",
+    "americano": "אמריקנו",
+    "cappuccino": "קפוצ'ינו",
+    "latte": "לאטה"
+  },
+  "quickBrew": {
+    "title": "הכנה מהירה",
+    "selectRecipe": "בחר מתכון",
+    "brew": "הכן",
+    "success": "נרשם בהצלחה"
+  },
+  "machineStats": {
+    "title": "סטטיסטיקות מכונה",
+    "totalDrinks": "סה\"כ משקאות",
+    "totalVolume": "נפח כולל (מ\"ל)",
+    "mostPopular": "מתכון פופולרי ביותר",
+    "avgPerDay": "ממוצע ליום",
+    "recipeBreakdown": "פירוט מתכונים"
+  },
+  "stats": {
+    "title": "סטטיסטיקות",
+    "overview": "סקירה כללית",
+    "coffeeStats": "סטטיסטיקות קפה",
+    "machineStats": "סטטיסטיקות מכונה"
+  },
+  "buttons": {
+    "save": "שמור",
+    "cancel": "ביטול",
+    "delete": "מחק",
+    "edit": "ערוך",
+    "add": "הוסף",
+    "back": "חזור",
+    "submit": "שלח"
+  },
+  "messages": {
+    "addSuccess": "נוסף בהצלחה",
+    "updateSuccess": "עודכן בהצלחה",
+    "deleteSuccess": "נמחק בהצלחה",
+    "error": "אירעה שגיאה",
+    "confirmDelete": "האם אתה בטוח שברצונך למחוק את זה?"
+  },
+  "language": {
+    "select": "שפה",
+    "en": "אנגלית",
+    "he": "עברית",
+    "ru": "רוסית"
+  }
+}

@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum RoastLevel {
+  LIGHT
+  MEDIUM
+  DARK
+}
+
+model Coffee {
+  id              Int        @id @default(autoincrement())
+  name            String
+  brand           String
+  roastLevel      RoastLevel
+  origin          String
+  shopName        String
+  purchaseDate    DateTime
+  initialQuantity Float      // in grams
+  currentQuantity Float      // in grams
+  pricePerBag     Float
+  notes           String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  usageLogs       UsageLog[]
+}
+
+model UsageLog {
+  id         Int      @id @default(autoincrement())
+  coffeeId   Int
+  coffee     Coffee   @relation(fields: [coffeeId], references: [id], onDelete: Cascade)
+  amountUsed Float    // in grams
+  usageDate  DateTime @default(now())
+  notes      String?
+  createdAt  DateTime @default(now())
+}
+
+model CoffeeMachine {
+  id              Int               @id @default(autoincrement())
+  name            String
+  brand           String
+  model           String
+  notes           String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  recipes         Recipe[]
+  machineUsageLogs MachineUsageLog[]
+}
+
+model Recipe {
+  id              Int               @id @default(autoincrement())
+  machineId       Int
+  machine         CoffeeMachine     @relation(fields: [machineId], references: [id], onDelete: Cascade)
+  name            String
+  volumeMl        Float             // volume in milliliters
+  description     String?
+  isActive        Boolean           @default(true)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  machineUsageLogs MachineUsageLog[]
+}
+
+model MachineUsageLog {
+  id         Int           @id @default(autoincrement())
+  recipeId   Int
+  recipe     Recipe        @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  machineId  Int
+  machine    CoffeeMachine @relation(fields: [machineId], references: [id], onDelete: Cascade)
+  volumeMl   Float         // actual volume prepared
+  usageDate  DateTime      @default(now())
+  notes      String?
+  createdAt  DateTime      @default(now())
+}

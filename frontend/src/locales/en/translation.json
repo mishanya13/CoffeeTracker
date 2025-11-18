@@ -1,0 +1,113 @@
+{
+  "app": {
+    "title": "CoffeeTracker",
+    "tagline": "Manage your coffee inventory and machine"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "inventory": "Coffee Inventory",
+    "usage": "Usage Log",
+    "machine": "Coffee Machine",
+    "recipes": "Recipes",
+    "quickBrew": "Quick Brew",
+    "stats": "Statistics"
+  },
+  "coffee": {
+    "title": "Coffee Inventory",
+    "name": "Coffee Name",
+    "brand": "Brand",
+    "roastLevel": "Roast Level",
+    "origin": "Origin",
+    "shopName": "Shop/Provider",
+    "purchaseDate": "Purchase Date",
+    "initialQuantity": "Initial Quantity (g)",
+    "currentQuantity": "Current Quantity (g)",
+    "price": "Price",
+    "notes": "Notes",
+    "addNew": "Add New Coffee",
+    "edit": "Edit Coffee",
+    "delete": "Delete",
+    "noCoffees": "No coffee in inventory yet",
+    "details": "Coffee Details"
+  },
+  "roastLevels": {
+    "LIGHT": "Light",
+    "MEDIUM": "Medium",
+    "DARK": "Dark"
+  },
+  "usage": {
+    "title": "Usage Log",
+    "recordUsage": "Record Usage",
+    "selectCoffee": "Select Coffee",
+    "amountUsed": "Amount Used (g)",
+    "date": "Date",
+    "history": "Usage History",
+    "noLogs": "No usage logs yet",
+    "totalUsed": "Total Used"
+  },
+  "machine": {
+    "title": "Coffee Machine",
+    "addMachine": "Add Machine",
+    "name": "Machine Name",
+    "brand": "Brand",
+    "model": "Model",
+    "noMachines": "No coffee machine configured yet",
+    "details": "Machine Details"
+  },
+  "recipe": {
+    "title": "Recipes",
+    "addRecipe": "Add Recipe",
+    "name": "Recipe Name",
+    "volume": "Volume (ml)",
+    "description": "Description",
+    "isActive": "Active",
+    "counter": "Times Prepared",
+    "noRecipes": "No recipes configured yet",
+    "espresso": "Espresso",
+    "americano": "Americano",
+    "cappuccino": "Cappuccino",
+    "latte": "Latte"
+  },
+  "quickBrew": {
+    "title": "Quick Brew",
+    "selectRecipe": "Select Recipe",
+    "brew": "Brew",
+    "success": "Logged successfully"
+  },
+  "machineStats": {
+    "title": "Machine Statistics",
+    "totalDrinks": "Total Drinks",
+    "totalVolume": "Total Volume (ml)",
+    "mostPopular": "Most Popular Recipe",
+    "avgPerDay": "Average Per Day",
+    "recipeBreakdown": "Recipe Breakdown"
+  },
+  "stats": {
+    "title": "Statistics",
+    "overview": "Overview",
+    "coffeeStats": "Coffee Statistics",
+    "machineStats": "Machine Statistics"
+  },
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "back": "Back",
+    "submit": "Submit"
+  },
+  "messages": {
+    "addSuccess": "Added successfully",
+    "updateSuccess": "Updated successfully",
+    "deleteSuccess": "Deleted successfully",
+    "error": "An error occurred",
+    "confirmDelete": "Are you sure you want to delete this?"
+  },
+  "language": {
+    "select": "Language",
+    "en": "English",
+    "he": "Hebrew",
+    "ru": "Russian"
+  }
+}
