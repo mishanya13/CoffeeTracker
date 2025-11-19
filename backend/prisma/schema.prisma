@@ -10,17 +10,11 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-enum RoastLevel {
-  LIGHT
-  MEDIUM
-  DARK
-}
-
 model Coffee {
   id              Int        @id @default(autoincrement())
   name            String
   brand           String
-  roastLevel      RoastLevel
+  roastLevel      String     // LIGHT, MEDIUM, or DARK
   origin          String
   shopName        String
   purchaseDate    DateTime
