@@ -4,9 +4,9 @@ const LanguageSelector = () => {
   const { i18n, t } = useTranslation();
 
   const languages = [
-    { code: 'en', label: t('language.en'), flag: '🇬🇧' },
-    { code: 'he', label: t('language.he'), flag: '🇮🇱' },
-    { code: 'ru', label: t('language.ru'), flag: '🇷🇺' },
+    { code: 'en', label: t('language.en'), display: 'EN' },
+    { code: 'he', label: t('language.he'), display: 'HE' },
+    { code: 'ru', label: t('language.ru'), display: 'RU' },
   ];
 
   const handleLanguageChange = (langCode: string) => {
@@ -26,7 +26,7 @@ const LanguageSelector = () => {
           }`}
           title={lang.label}
         >
-          {lang.flag}
+          {lang.display}
         </button>
       ))}
     </div>
