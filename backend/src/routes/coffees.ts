@@ -1,6 +1,5 @@
 import { Router, Request, Response } from 'express';
 import { prisma } from '../server';
-import { RoastLevel } from '@prisma/client';
 
 const router = Router();
 
@@ -62,7 +61,7 @@ router.post('/', async (req: Request, res: Response) => {
       data: {
         name,
         brand,
-        roastLevel: roastLevel as RoastLevel,
+        roastLevel,
         origin,
         shopName,
         purchaseDate: new Date(purchaseDate),
@@ -102,7 +101,7 @@ router.put('/:id', async (req: Request, res: Response) => {
       data: {
         name,
         brand,
-        roastLevel: roastLevel as RoastLevel,
+        roastLevel,
         origin,
         shopName,
         purchaseDate: purchaseDate ? new Date(purchaseDate) : undefined,
