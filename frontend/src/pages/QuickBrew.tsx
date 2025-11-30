@@ -4,25 +4,38 @@ import { recipeApi, machineUsageApi } from '../services/api';
 import type { Recipe } from '../types';
 import Card from '../components/Card';
 import Button from '../components/Button';
+import { useToast } from '../hooks/useToast';
 
 const QuickBrew = () => {
   const { t } = useTranslation();
+  const toast = useToast();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchRecipes();
-  }, []);
+    let isMounted = true;
 
-  const fetchRecipes = async () => {
-    try {
-      const response = await recipeApi.getAll();
-      setRecipes(response.data.filter((r) => r.isActive));
-    } catch (error) {
-      console.error('Failed to fetch recipes:', error);
-    }
-  };
+    const loadRecipes = async () => {
+      try {
+        const response = await recipeApi.getAll();
+        if (isMounted) {
+          setRecipes(response.data.filter((r) => r.isActive));
+        }
+      } catch (error) {
+        if (isMounted) {
+          console.error('Failed to fetch recipes:', error);
+          toast.error(t('messages.fetchError') || 'Failed to load recipes');
+        }
+      }
+    };
+
+    loadRecipes();
+
+    return () => {
+      isMounted = false; // Cleanup: prevent setState after unmount
+    };
+  }, [toast, t]);
 
   const handleBrew = async (recipe: Recipe) => {
     setLoading(true);
@@ -35,12 +48,12 @@ const QuickBrew = () => {
         usageDate: new Date().toISOString(),
       });
 
-      // Show success message briefly
-      setTimeout(() => {
-        setSelectedRecipe(null);
-      }, 2000);
+      toast.success(`${recipe.name} brewed successfully!`);
+      setSelectedRecipe(null);
     } catch (error) {
       console.error('Failed to log brew:', error);
+      toast.error(t('messages.brewError') || 'Failed to log brew');
+      setSelectedRecipe(null);
     } finally {
       setLoading(false);
     }
