@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { statsApi } from '../services/api';
 import type { OverallStats } from '../types';
 import Card from '../components/Card';
-import Button from '../components/Button';
 import Badge from '../components/Badge';
 
 const Dashboard = () => {
@@ -12,11 +11,7 @@ const Dashboard = () => {
   const [stats, setStats] = useState<OverallStats | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchStats();
-  }, []);
-
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const response = await statsApi.getOverall();
       setStats(response.data);
@@ -25,7 +20,11 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchStats();
+  }, [fetchStats]);
 
   if (loading) {
     return (
