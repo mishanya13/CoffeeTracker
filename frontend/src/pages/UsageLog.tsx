@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usageApi, coffeeApi } from '../services/api';
 import type { UsageLog as UsageLogType, Coffee } from '../types';
@@ -20,34 +20,34 @@ const UsageLog = () => {
     notes: '',
   });
 
-  useEffect(() => {
-    fetchLogs();
-    fetchCoffees();
-  }, []);
-
-  const fetchLogs = async () => {
+  const fetchLogs = useCallback(async () => {
     try {
       const response = await usageApi.getAll();
       setLogs(response.data);
     } catch (error) {
       console.error('Failed to fetch logs:', error);
     }
-  };
+  }, []);
 
-  const fetchCoffees = async () => {
+  const fetchCoffees = useCallback(async () => {
     try {
       const response = await coffeeApi.getAll();
       setCoffees(response.data);
     } catch (error) {
       console.error('Failed to fetch coffees:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchLogs();
+    fetchCoffees();
+  }, [fetchLogs, fetchCoffees]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await usageApi.create({
-        coffeeId: parseInt(formData.coffeeId),
+        coffeeId: parseInt(formData.coffeeId, 10),
         amountUsed: parseFloat(formData.amountUsed),
         usageDate: formData.usageDate,
         notes: formData.notes,

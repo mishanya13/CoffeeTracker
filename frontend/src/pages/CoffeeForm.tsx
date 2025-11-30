@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { coffeeApi } from '../services/api';
@@ -7,9 +7,11 @@ import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import Select from '../components/Select';
+import { useToast } from '../hooks/useToast';
 
 const CoffeeForm = () => {
   const { t } = useTranslation();
+  const toast = useToast();
   const navigate = useNavigate();
   const { id } = useParams();
   const isEdit = Boolean(id);
@@ -29,13 +31,7 @@ const CoffeeForm = () => {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (isEdit && id) {
-      fetchCoffee(parseInt(id));
-    }
-  }, [id]);
-
-  const fetchCoffee = async (coffeeId: number) => {
+  const fetchCoffee = useCallback(async (coffeeId: number) => {
     try {
       const response = await coffeeApi.getById(coffeeId);
       const coffee = response.data;
@@ -53,8 +49,16 @@ const CoffeeForm = () => {
       });
     } catch (error) {
       console.error('Failed to fetch coffee:', error);
+      toast.error(t('messages.fetchError') || 'Failed to load coffee details');
+      navigate('/inventory');
     }
-  };
+  }, [toast, t, navigate]);
+
+  useEffect(() => {
+    if (isEdit && id) {
+      fetchCoffee(parseInt(id, 10));
+    }
+  }, [id, isEdit, fetchCoffee]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
@@ -77,14 +81,17 @@ const CoffeeForm = () => {
       };
 
       if (isEdit && id) {
-        await coffeeApi.update(parseInt(id), data);
+        await coffeeApi.update(parseInt(id, 10), data);
+        toast.success(t('messages.updateSuccess') || 'Coffee updated successfully');
       } else {
         await coffeeApi.create(data);
+        toast.success(t('messages.createSuccess') || 'Coffee added successfully');
       }
 
       navigate('/inventory');
     } catch (error) {
       console.error('Failed to save coffee:', error);
+      toast.error(t('messages.saveError') || 'Failed to save coffee');
     } finally {
       setLoading(false);
     }
