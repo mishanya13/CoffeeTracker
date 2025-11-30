@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { statsApi, machineApi } from '../services/api';
 import type { OverallStats, MachineStats, CoffeeMachine } from '../types';
@@ -10,28 +10,24 @@ const Statistics = () => {
   const [machineStats, setMachineStats] = useState<MachineStats | null>(null);
   const [machines, setMachines] = useState<CoffeeMachine[]>([]);
   const [selectedMachineId, setSelectedMachineId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchOverallStats();
-    fetchMachines();
-  }, []);
-
-  useEffect(() => {
-    if (selectedMachineId) {
-      fetchMachineStats(selectedMachineId);
-    }
-  }, [selectedMachineId]);
-
-  const fetchOverallStats = async () => {
+  const fetchOverallStats = useCallback(async () => {
     try {
+      setLoading(true);
+      setError(null);
       const response = await statsApi.getOverall();
       setOverallStats(response.data);
     } catch (error) {
       console.error('Failed to fetch overall stats:', error);
+      setError('Failed to load statistics. Please try again.');
+    } finally {
+      setLoading(false);
     }
-  };
+  }, []);
 
-  const fetchMachines = async () => {
+  const fetchMachines = useCallback(async () => {
     try {
       const response = await machineApi.getAll();
       setMachines(response.data);
@@ -41,16 +37,77 @@ const Statistics = () => {
     } catch (error) {
       console.error('Failed to fetch machines:', error);
     }
-  };
+  }, []);
 
-  const fetchMachineStats = async (machineId: number) => {
+  const fetchMachineStats = useCallback(async (machineId: number) => {
     try {
+      setLoading(true);
+      setError(null);
       const response = await statsApi.getMachineStats(machineId);
       setMachineStats(response.data);
     } catch (error) {
       console.error('Failed to fetch machine stats:', error);
+      setError('Failed to load machine statistics. Please try again.');
+    } finally {
+      setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchOverallStats();
+    fetchMachines();
+  }, [fetchOverallStats, fetchMachines]);
+
+  useEffect(() => {
+    if (selectedMachineId) {
+      fetchMachineStats(selectedMachineId);
+    }
+  }, [selectedMachineId, fetchMachineStats]);
+
+  // Show loading state
+  if (loading && !overallStats) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold text-amber-900">
+          ☕ Coffee Statistics
+        </h1>
+        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading your coffee statistics...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold text-amber-900">
+          ☕ Coffee Statistics
+        </h1>
+        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+          <div className="text-5xl mb-4">⚠️</div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">
+            {error}
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Please check your internet connection and try again.
+          </p>
+          <button
+            onClick={() => {
+              setError(null);
+              fetchOverallStats();
+              fetchMachines();
+            }}
+            className="bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
